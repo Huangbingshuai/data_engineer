@@ -208,7 +208,7 @@ class TestFeedbackAgenticNodeExecution:
 
         async def _raise_interrupted(*args, **kwargs):
             raise ExecutionInterrupted("User pressed ESC")
-            yield  # noqa: makes this an async generator
+            yield
 
         node = FeedbackAgenticNode(agent_config=real_agent_config, execution_mode="workflow")
         node.input = FeedbackNodeInput(user_message="Analyze")
@@ -595,9 +595,9 @@ class TestFeedbackSystemPrompt:
         """
         from pathlib import Path
 
-        import dataengineer
+        from dataengineer import __file__ as package_file
 
-        template_path = Path(datus.__file__).parent / "prompts" / "prompt_templates" / "feedback_system_1.0.j2"
+        template_path = Path(package_file).parent / "prompts" / "prompt_templates" / "feedback_system_1.0.j2"
         content = template_path.read_text(encoding="utf-8")
         assert "caller_node_name" not in content
         assert "caller_memory_dir" not in content

@@ -107,7 +107,7 @@ def test_installation():
     print("🧪 Testing installation...")
     try:
         result = run_command(
-            "python3 -c 'import dataengineer; print(f"DataEngineer version: {datus.__version__}"): {datus.__version__}\")'",
+            "python3 -c \"import dataengineer; print(f'DataEngineer version: {dataengineer.__version__}')\"",
             capture_output=True,
             description="Testing package import and version",
         )

@@ -145,11 +145,14 @@ class TestHealthEndpoint:
 
 class TestAuthEndpoint:
     def test_auth_valid_credentials(self, client):
+        from dataengineer.api.legacy_auth import auth_service
+
+        client_id, client_secret = next(iter(auth_service.clients.items()))
         response = client.post(
             "/auth/token",
             data={
-                "client_id": "dataengineer_client",
-                "client_secret": "dataengineer_secret_key",
+                "client_id": client_id,
+                "client_secret": client_secret,
                 "grant_type": "client_credentials",
             },
         )

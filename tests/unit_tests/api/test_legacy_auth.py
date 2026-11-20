@@ -35,11 +35,14 @@ class TestLoadAuthConfig:
 class TestAuthService:
     """Tests for AuthService."""
 
-    def test_validate_client_credentials(self):
+    def test_validate_client_credentials(self, tmp_path):
         """validate_client_credentials returns True for valid credentials."""
-        svc = AuthService()
-        # Default config should have at least one client
-        assert svc.validate_client_credentials("dataengineer_client", "dataengineer_secret_key") is True
+        import yaml
+
+        config_file = tmp_path / "auth.yml"
+        config_file.write_text(yaml.safe_dump({"clients": {"test_client": "test_secret"}}), encoding="utf-8")
+        svc = AuthService(config_path=str(config_file))
+        assert svc.validate_client_credentials("test_client", "test_secret") is True
 
     def test_validate_client_invalid(self):
         """validate_client_credentials returns False for invalid credentials."""

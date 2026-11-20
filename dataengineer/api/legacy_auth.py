@@ -67,7 +67,7 @@ class AuthService:
 
     def __init__(self, config_path: Optional[str] = None):
         """Initialize with configuration from file."""
-        self.config = load_auth_config()
+        self.config = load_auth_config(config_path)
         self.clients = self.config.get("clients", DEFAULT_CLIENTS)
 
         # Load JWT configuration

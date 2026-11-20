@@ -69,7 +69,7 @@ class TestReadTemplate:
         from dataengineer.cli.web.chatbot import _read_template
 
         html = _read_template()
-        assert "DataEngineerChatbot" in html
+        assert "DatusChatbot" in html
         assert "chatbot-root" in html
         assert "{{ request_origin_json }}" in html
         assert "{{ user_name_json }}" in html
@@ -388,7 +388,7 @@ class TestTemplateFile:
         template_path = os.path.join(_TEMPLATES_DIR, "index.html")
         with open(template_path, encoding="utf-8") as f:
             content = f.read()
-        assert "DataEngineerChatbot.initChatbot" in content
+        assert "DatusChatbot.initChatbot" in content
         assert "chatbot-root" in content
         assert "{{ chatbot_js }}" in content
         assert "{{ chatbot_css }}" in content

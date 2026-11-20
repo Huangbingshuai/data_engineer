@@ -10,7 +10,6 @@ from pathlib import Path
 
 import duckdb
 
-
 SEED = 20261119
 DEFAULT_OUTPUT = Path(__file__).resolve().parents[1] / "sample_data" / "retail_demo.duckdb"
 STATES = [
@@ -146,7 +145,6 @@ def make_database(output: Path, order_count: int, seed: int) -> None:
         con.executemany("INSERT INTO products VALUES (?, ?, ?, ?, ?)", products)
 
         customers_by_id = [row[0] for row in customers]
-        products_by_id = [row[0] for row in products]
         sellers_by_id = [row[0] for row in sellers]
         order_rows = []
         item_rows = []
@@ -207,7 +205,6 @@ def make_database(output: Path, order_count: int, seed: int) -> None:
             # Split a small share across two payment methods; every order's
             # payment total exactly matches its item and freight total.
             split_payment = order_total >= 100 and rng.random() < 0.07
-            pieces = 2 if split_payment else 1
             first_value = round(order_total * rng.uniform(0.25, 0.75), 2) if split_payment else order_total
             values = [first_value, round(order_total - first_value, 2)] if split_payment else [order_total]
             for seq, value in enumerate(values, 1):

@@ -1480,21 +1480,25 @@ class AgenticNode(Node):
         from dataengineer.tools.func_tool import FilesystemFuncTool
 
         root_path = kwargs.pop("root_path", None) or self._resolve_workspace_root()
-        dataengineer_home = kwargs.pop("dataengineer_home", None)
-        if dataengineer_home is None and self.agent_config is not None:
+        datus_home = kwargs.pop("datus_home", None)
+        if datus_home is None and self.agent_config is not None:
             path_manager = getattr(self.agent_config, "path_manager", None)
             if path_manager is not None:
                 try:
-                    dataengineer_home = str(path_manager.dataengineer_home)
+                    home_path = getattr(path_manager, "datus_home", None) or getattr(
+                        path_manager, "dataengineer_home", None
+                    )
+                    if home_path is not None:
+                        datus_home = str(home_path)
                 except Exception:
-                    dataengineer_home = None
+                    datus_home = None
         strict = kwargs.pop("strict", None)
         if strict is None:
             strict = self._resolve_filesystem_strict()
         return FilesystemFuncTool(
             root_path=root_path,
             current_node=kwargs.pop("current_node", None) or self.get_node_name(),
-            dataengineer_home=dataengineer_home,
+            datus_home=datus_home,
             strict=strict,
             **kwargs,
         )
@@ -1516,10 +1520,14 @@ class AgenticNode(Node):
 
             from dataengineer.tools.permission.permission_hooks import FilesystemPolicy
 
+            home_path = getattr(path_manager, "datus_home", None) or getattr(path_manager, "dataengineer_home", None)
+            if home_path is None:
+                return None
+
             return FilesystemPolicy(
                 root_path=_Path(self._resolve_workspace_root()).resolve(strict=False),
                 current_node=self.get_node_name(),
-                dataengineer_home=_Path(path_manager.dataengineer_home),
+                datus_home=_Path(home_path),
                 strict=self._resolve_filesystem_strict(),
             )
         except Exception as e:
