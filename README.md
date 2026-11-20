@@ -81,7 +81,20 @@ uv run dataengineer-api \
 - API docs: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 - Health check: [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
 
-For background operation, add `--daemon`. Use `--action status` and `--action stop` with the same `--config` value to check or stop it. The default daemon log is `~/.dataengineer/logs/dataengineer-agent-api.log`.
+Check the server with:
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+For background operation, add `--daemon`. Check or stop the daemon with the same configuration path:
+
+```bash
+uv run dataengineer-api --config conf/agent.yml --action status
+uv run dataengineer-api --config conf/agent.yml --action stop
+```
+
+The default daemon log is `~/.dataengineer/logs/dataengineer-agent-api.log`.
 
 ### MCP server
 
