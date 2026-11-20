@@ -10,6 +10,10 @@ DataEngineer Agent is an open-source assistant for exploring databases and compl
 - Connect the agent to MCP clients with the included MCP server.
 - Explore the included synthetic retail demo and historical California school statistics.
 
+## Screenshots
+
+![DataEngineer Agent web interface](docs/screenshots/frontend.png)
+
 ## Requirements
 
 - Python 3.12 or newer
